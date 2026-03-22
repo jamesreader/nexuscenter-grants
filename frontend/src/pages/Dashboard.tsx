@@ -94,19 +94,19 @@ function DeadlineCard({ grant }: { grant: DeadlineGrant }) {
   return (
     <Link
       to={`/grants/${grant.id}`}
-      className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors"
+      className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors min-h-[44px]"
     >
       <div className="flex-1 min-w-0">
-        <div className="font-medium text-gray-900 truncate">{grant.title}</div>
-        <div className="text-sm text-gray-500 truncate">{grant.agency}</div>
+        <div className="font-medium text-gray-900 truncate text-sm sm:text-base">{grant.title}</div>
+        <div className="text-xs sm:text-sm text-gray-500 truncate">{grant.agency}</div>
       </div>
-      <div className="flex items-center gap-3 flex-shrink-0 ml-4">
+      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0 ml-3 sm:ml-4">
         {grant.funding_max && (
-          <span className="text-sm text-green-600 font-medium">
+          <span className="text-xs sm:text-sm text-green-600 font-medium hidden xs:inline">
             {formatCurrency(grant.funding_max)}
           </span>
         )}
-        <span className={`flex items-center gap-1 text-sm font-medium px-2 py-1 rounded ${
+        <span className={`flex items-center gap-1 text-xs sm:text-sm font-medium px-2 py-1 rounded ${
           isUrgent ? 'bg-red-100 text-red-700' :
           isWarning ? 'bg-amber-100 text-amber-700' :
           'bg-gray-100 text-gray-600'
@@ -278,45 +278,45 @@ export default function Dashboard() {
                 Manage <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap sm:flex-nowrap items-center gap-2">
               {pipeline.applications.draft > 0 && (
-                <div className="flex-1 text-center p-3 bg-gray-50 rounded-lg">
-                  <div className="text-xl font-bold text-gray-600">{pipeline.applications.draft}</div>
+                <div className="flex-1 min-w-[70px] text-center p-2 sm:p-3 bg-gray-50 rounded-lg">
+                  <div className="text-lg sm:text-xl font-bold text-gray-600">{pipeline.applications.draft}</div>
                   <div className="text-xs text-gray-500">Draft</div>
                 </div>
               )}
               {pipeline.applications.in_progress > 0 && (
                 <>
-                  <ArrowRight className="w-4 h-4 text-gray-300" />
-                  <div className="flex-1 text-center p-3 bg-blue-50 rounded-lg">
-                    <div className="text-xl font-bold text-blue-600">{pipeline.applications.in_progress}</div>
+                  <ArrowRight className="w-4 h-4 text-gray-300 hidden sm:block" />
+                  <div className="flex-1 min-w-[70px] text-center p-2 sm:p-3 bg-blue-50 rounded-lg">
+                    <div className="text-lg sm:text-xl font-bold text-blue-600">{pipeline.applications.in_progress}</div>
                     <div className="text-xs text-blue-600">In Progress</div>
                   </div>
                 </>
               )}
               {pipeline.applications.submitted > 0 && (
                 <>
-                  <ArrowRight className="w-4 h-4 text-gray-300" />
-                  <div className="flex-1 text-center p-3 bg-purple-50 rounded-lg">
-                    <div className="text-xl font-bold text-purple-600">{pipeline.applications.submitted}</div>
+                  <ArrowRight className="w-4 h-4 text-gray-300 hidden sm:block" />
+                  <div className="flex-1 min-w-[70px] text-center p-2 sm:p-3 bg-purple-50 rounded-lg">
+                    <div className="text-lg sm:text-xl font-bold text-purple-600">{pipeline.applications.submitted}</div>
                     <div className="text-xs text-purple-600">Submitted</div>
                   </div>
                 </>
               )}
               {pipeline.applications.under_review > 0 && (
                 <>
-                  <ArrowRight className="w-4 h-4 text-gray-300" />
-                  <div className="flex-1 text-center p-3 bg-amber-50 rounded-lg">
-                    <div className="text-xl font-bold text-amber-600">{pipeline.applications.under_review}</div>
+                  <ArrowRight className="w-4 h-4 text-gray-300 hidden sm:block" />
+                  <div className="flex-1 min-w-[70px] text-center p-2 sm:p-3 bg-amber-50 rounded-lg">
+                    <div className="text-lg sm:text-xl font-bold text-amber-600">{pipeline.applications.under_review}</div>
                     <div className="text-xs text-amber-600">Under Review</div>
                   </div>
                 </>
               )}
               {pipeline.applications.awarded > 0 && (
                 <>
-                  <ArrowRight className="w-4 h-4 text-gray-300" />
-                  <div className="flex-1 text-center p-3 bg-green-50 rounded-lg">
-                    <div className="text-xl font-bold text-green-600">{pipeline.applications.awarded}</div>
+                  <ArrowRight className="w-4 h-4 text-gray-300 hidden sm:block" />
+                  <div className="flex-1 min-w-[70px] text-center p-2 sm:p-3 bg-green-50 rounded-lg">
+                    <div className="text-lg sm:text-xl font-bold text-green-600">{pipeline.applications.awarded}</div>
                     <div className="text-xs text-green-600">Awarded</div>
                   </div>
                 </>
@@ -331,44 +331,44 @@ export default function Dashboard() {
             <Star className="w-5 h-5 text-amber-500" />
             Quick Actions
           </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <Link
               to="/discover?min_relevance=0.7"
-              className="flex items-center gap-2 p-3 rounded-lg border hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-3 p-3 rounded-lg border hover:bg-gray-50 transition-colors min-h-[44px]"
             >
-              <CheckCircle className="w-5 h-5 text-green-500" />
-              <div>
-                <div className="font-medium text-gray-900">High Relevance</div>
+              <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium text-gray-900 text-sm">High Relevance</div>
                 <div className="text-xs text-gray-500">View top matches</div>
               </div>
             </Link>
             <Link
               to="/discover?sort_by=deadline&sort_desc=false"
-              className="flex items-center gap-2 p-3 rounded-lg border hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-3 p-3 rounded-lg border hover:bg-gray-50 transition-colors min-h-[44px]"
             >
-              <AlertTriangle className="w-5 h-5 text-red-500" />
-              <div>
-                <div className="font-medium text-gray-900">Urgent Deadlines</div>
+              <AlertTriangle className="w-5 h-5 text-red-500 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium text-gray-900 text-sm">Urgent Deadlines</div>
                 <div className="text-xs text-gray-500">Closing soon</div>
               </div>
             </Link>
             <Link
               to="/discover"
-              className="flex items-center gap-2 p-3 rounded-lg border hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-3 p-3 rounded-lg border hover:bg-gray-50 transition-colors min-h-[44px]"
             >
-              <Star className="w-5 h-5 text-amber-500" />
-              <div>
-                <div className="font-medium text-gray-900">Flagged Grants</div>
+              <Star className="w-5 h-5 text-amber-500 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium text-gray-900 text-sm">Flagged Grants</div>
                 <div className="text-xs text-gray-500">{pipeline?.flagged || 0} flagged</div>
               </div>
             </Link>
             <Link
               to="/applications"
-              className="flex items-center gap-2 p-3 rounded-lg border hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-3 p-3 rounded-lg border hover:bg-gray-50 transition-colors min-h-[44px]"
             >
-              <FileText className="w-5 h-5 text-blue-500" />
-              <div>
-                <div className="font-medium text-gray-900">Applications</div>
+              <FileText className="w-5 h-5 text-blue-500 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium text-gray-900 text-sm">Applications</div>
                 <div className="text-xs text-gray-500">Track progress</div>
               </div>
             </Link>

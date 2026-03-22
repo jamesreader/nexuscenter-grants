@@ -159,12 +159,12 @@ function KeywordList({
               onChange={(e) => setNewKeyword(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Add keyword..."
-              className="flex-1 px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="flex-1 px-3 py-2 min-h-[44px] text-base sm:text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
             />
             <button
               onClick={handleAdd}
               disabled={!newKeyword.trim()}
-              className="px-3 py-1.5 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-3 py-2 min-w-[44px] min-h-[44px] flex items-center justify-center bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Plus className="w-4 h-4" />
             </button>
@@ -375,7 +375,7 @@ export default function Settings() {
       <div>
         <button
           onClick={() => setSelectedVersion(null)}
-          className="flex items-center gap-2 text-primary-600 hover:text-primary-800 mb-4"
+          className="flex items-center gap-2 text-primary-600 hover:text-primary-800 mb-4 min-h-[44px]"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Settings
@@ -396,7 +396,7 @@ export default function Settings() {
               )}
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 text-sm">
               <div>
                 <span className="text-gray-500">Title:</span>
                 <p className="font-medium">{versionDetail.title}</p>
@@ -604,7 +604,7 @@ export default function Settings() {
               <button
                 onClick={() => regenerateRulesMutation.mutate()}
                 disabled={regenerateRulesMutation.isPending || !profile}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 min-h-[44px] bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {regenerateRulesMutation.isPending ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -617,7 +617,7 @@ export default function Settings() {
               <button
                 onClick={() => scoreAllMutation.mutate()}
                 disabled={scoreAllMutation.isPending || !profile?.relevance_rules}
-                className="w-full flex items-center justify-center gap-2 px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 min-h-[44px] border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {scoreAllMutation.isPending ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -813,14 +813,14 @@ export default function Settings() {
               {/* Funding Range */}
               <div className="mt-4 pt-4 border-t">
                 <h4 className="font-medium text-gray-900 mb-3">Preferred Funding Range</h4>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm text-gray-600 mb-1">Minimum ($)</label>
                     <input
                       type="number"
                       value={rules.min_preferred_funding || 0}
                       onChange={(e) => updateRuleField('min_preferred_funding', parseFloat(e.target.value) || 0)}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full px-3 py-2.5 min-h-[44px] text-base sm:text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                   <div>
@@ -829,7 +829,7 @@ export default function Settings() {
                       type="number"
                       value={rules.max_preferred_funding || 0}
                       onChange={(e) => updateRuleField('max_preferred_funding', parseFloat(e.target.value) || 0)}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                      className="w-full px-3 py-2.5 min-h-[44px] text-base sm:text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
                     />
                   </div>
                 </div>

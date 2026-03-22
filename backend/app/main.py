@@ -1661,7 +1661,7 @@ async def update_scoring_rules(
 
 # Mount static files if the frontend dist directory exists
 import pathlib
-static_dir = pathlib.Path(__file__).parent.parent.parent / "frontend" / "dist"
+static_dir = pathlib.Path(__file__).parent.parent / "frontend" / "dist"
 if static_dir.exists():
     from starlette.responses import FileResponse
 

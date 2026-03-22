@@ -247,16 +247,16 @@ function ApplicationDetailView({ id }: { id: string }) {
         Back to Applications
       </Link>
 
-      <div className="flex items-start justify-between gap-4 mb-6">
-        <div>
+      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-6">
+        <div className="min-w-0">
           <div className="flex items-center gap-3 mb-2">
             <StatusBadge status={app.status} />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">{app.project_title}</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 break-words">{app.project_title}</h1>
           {grant && (
-            <Link to={`/grants/${grant.id}`} className="text-gray-600 hover:text-primary-600 flex items-center gap-1 mt-1">
-              {grant.agency} - {grant.title}
-              <ExternalLink className="w-4 h-4" />
+            <Link to={`/grants/${grant.id}`} className="text-gray-600 hover:text-primary-600 flex items-center gap-1 mt-1 text-sm break-words">
+              <span className="min-w-0 break-words">{grant.agency} - {grant.title}</span>
+              <ExternalLink className="w-4 h-4 flex-shrink-0" />
             </Link>
           )}
         </div>
@@ -270,7 +270,7 @@ function ApplicationDetailView({ id }: { id: string }) {
               })
               setEditing(true)
             }}
-            className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50"
+            className="flex items-center gap-2 px-4 py-2 min-h-[44px] border rounded-lg hover:bg-gray-50"
           >
             <Edit3 className="w-4 h-4" />
             Edit
@@ -280,7 +280,7 @@ function ApplicationDetailView({ id }: { id: string }) {
               onClick={() => {
                 if (confirm('Delete this application?')) deleteMutation.mutate()
               }}
-              className="flex items-center gap-2 px-4 py-2 border border-red-200 text-red-600 rounded-lg hover:bg-red-50"
+              className="flex items-center gap-2 px-4 py-2 min-h-[44px] border border-red-200 text-red-600 rounded-lg hover:bg-red-50"
             >
               <Trash2 className="w-4 h-4" />
               Delete
@@ -302,7 +302,7 @@ function ApplicationDetailView({ id }: { id: string }) {
                     type="text"
                     value={editData.project_title}
                     onChange={e => setEditData({ ...editData, project_title: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 py-2.5 min-h-[44px] text-base sm:text-sm border rounded-lg focus:ring-2 focus:ring-primary-500"
                   />
                 </div>
                 <div>
@@ -311,7 +311,7 @@ function ApplicationDetailView({ id }: { id: string }) {
                     type="number"
                     value={editData.requested_amount}
                     onChange={e => setEditData({ ...editData, requested_amount: e.target.value })}
-                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500"
+                    className="w-full px-3 py-2.5 min-h-[44px] text-base sm:text-sm border rounded-lg focus:ring-2 focus:ring-primary-500"
                     placeholder="Enter amount"
                   />
                 </div>
@@ -320,11 +320,11 @@ function ApplicationDetailView({ id }: { id: string }) {
                   <textarea
                     value={editData.notes}
                     onChange={e => setEditData({ ...editData, notes: e.target.value })}
-                    className="w-full h-32 px-3 py-2 border rounded-lg resize-none focus:ring-2 focus:ring-primary-500"
+                    className="w-full h-32 px-3 py-2.5 text-base sm:text-sm border rounded-lg resize-none focus:ring-2 focus:ring-primary-500"
                     placeholder="Application notes..."
                   />
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <button
                     onClick={() => updateMutation.mutate({
                       project_title: editData.project_title,
@@ -332,14 +332,14 @@ function ApplicationDetailView({ id }: { id: string }) {
                       notes: editData.notes || null,
                     })}
                     disabled={updateMutation.isPending}
-                    className="flex items-center gap-1 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
+                    className="flex items-center justify-center gap-1 px-4 py-2.5 min-h-[44px] bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50"
                   >
                     {updateMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                     Save Changes
                   </button>
                   <button
                     onClick={() => setEditing(false)}
-                    className="flex items-center gap-1 px-4 py-2 border rounded-lg hover:bg-gray-50"
+                    className="flex items-center justify-center gap-1 px-4 py-2.5 min-h-[44px] border rounded-lg hover:bg-gray-50"
                   >
                     <X className="w-4 h-4" />
                     Cancel
@@ -347,7 +347,7 @@ function ApplicationDetailView({ id }: { id: string }) {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <div className="text-sm text-gray-500">Requested Amount</div>
                   <div className="font-semibold text-green-600">{formatCurrency(app.requested_amount)}</div>
@@ -358,11 +358,11 @@ function ApplicationDetailView({ id }: { id: string }) {
                 </div>
                 <div>
                   <div className="text-sm text-gray-500">Created</div>
-                  <div>{formatDateTime(app.created_at)}</div>
+                  <div className="text-sm">{formatDateTime(app.created_at)}</div>
                 </div>
                 <div>
                   <div className="text-sm text-gray-500">Last Updated</div>
-                  <div>{formatDateTime(app.updated_at)}</div>
+                  <div className="text-sm">{formatDateTime(app.updated_at)}</div>
                 </div>
                 {app.submitted_at && (
                   <div className="col-span-2">
@@ -418,7 +418,7 @@ function ApplicationDetailView({ id }: { id: string }) {
                   value={statusNote}
                   onChange={e => setStatusNote(e.target.value)}
                   placeholder="Optional note about this status change..."
-                  className="w-full h-20 px-3 py-2 border rounded-lg resize-none text-sm focus:ring-2 focus:ring-primary-500"
+                  className="w-full h-20 px-3 py-2.5 min-h-[44px] border rounded-lg resize-none text-base sm:text-sm focus:ring-2 focus:ring-primary-500"
                 />
                 <div className="space-y-2">
                   {nextStatuses.map(status => {
@@ -428,7 +428,7 @@ function ApplicationDetailView({ id }: { id: string }) {
                         key={status}
                         onClick={() => statusMutation.mutate({ status, notes: statusNote || undefined })}
                         disabled={statusMutation.isPending}
-                        className={`flex items-center gap-2 w-full px-4 py-2.5 rounded-lg border ${config.bgColor} ${config.color} hover:opacity-80 disabled:opacity-50`}
+                        className={`flex items-center gap-2 w-full px-4 py-2.5 min-h-[44px] rounded-lg border ${config.bgColor} ${config.color} hover:opacity-80 disabled:opacity-50`}
                       >
                         {statusMutation.isPending ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -520,16 +520,16 @@ export default function Applications() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Applications</h2>
-          <p className="text-gray-500 mt-1">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Applications</h2>
+          <p className="text-gray-500 mt-1 text-sm">
             {data ? `${data.total} application${data.total !== 1 ? 's' : ''}` : 'Loading...'}
           </p>
         </div>
         <Link
           to="/discover"
-          className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
+          className="flex items-center justify-center gap-2 px-4 py-2 min-h-[44px] bg-primary-600 text-white rounded-lg hover:bg-primary-700 w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" />
           Find Grants
@@ -537,10 +537,10 @@ export default function Applications() {
       </div>
 
       {/* Status Filter Tabs */}
-      <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
+      <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
         <button
           onClick={() => setFilter('')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap ${
+          className={`px-4 py-2 min-h-[44px] rounded-lg text-sm font-medium whitespace-nowrap ${
             filter === '' ? 'bg-primary-100 text-primary-800' : 'bg-white border hover:bg-gray-50'
           }`}
         >
@@ -553,7 +553,7 @@ export default function Applications() {
             <button
               key={status}
               onClick={() => setFilter(status)}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap ${
+              className={`flex items-center gap-1.5 px-4 py-2 min-h-[44px] rounded-lg text-sm font-medium whitespace-nowrap ${
                 filter === status ? `${config.bgColor} ${config.color}` : 'bg-white border hover:bg-gray-50'
               }`}
             >

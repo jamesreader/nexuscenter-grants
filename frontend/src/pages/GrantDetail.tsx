@@ -221,18 +221,18 @@ export default function GrantDetail() {
           Back to Discover
         </Link>
 
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+          <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-2">
-              {grant.is_flagged && <Star className="w-6 h-6 text-amber-500 fill-amber-500" />}
-              <h1 className="text-2xl font-bold text-gray-900">{grant.title}</h1>
+              {grant.is_flagged && <Star className="w-6 h-6 text-amber-500 fill-amber-500 flex-shrink-0" />}
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 break-words">{grant.title}</h1>
             </div>
-            <div className="flex items-center gap-4 text-gray-600">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-gray-600 text-sm">
               <span className="flex items-center gap-1">
-                <Building2 className="w-4 h-4" />
-                {grant.agency}
+                <Building2 className="w-4 h-4 flex-shrink-0" />
+                <span className="break-words">{grant.agency}</span>
               </span>
-              <span className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-sm">
+              <span className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs sm:text-sm">
                 {grant.source === 'GRANTS_GOV' ? 'grants.gov' : grant.source.toLowerCase()}
               </span>
               {grant.source_url && (
@@ -243,17 +243,18 @@ export default function GrantDetail() {
                   className="flex items-center gap-1 text-primary-600 hover:underline"
                 >
                   <ExternalLink className="w-4 h-4" />
-                  View Original
+                  <span className="hidden sm:inline">View Original</span>
+                  <span className="sm:hidden">Original</span>
                 </a>
               )}
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               onClick={() => flagMutation.mutate(grant.is_flagged)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border ${
+              className={`flex items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] rounded-lg border text-sm ${
                 grant.is_flagged
                   ? 'bg-amber-50 border-amber-200 text-amber-700'
                   : 'hover:bg-gray-50'
@@ -264,7 +265,7 @@ export default function GrantDetail() {
             </button>
             <button
               onClick={() => dismissMutation.mutate(grant.is_dismissed)}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg border ${
+              className={`flex items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] rounded-lg border text-sm ${
                 grant.is_dismissed
                   ? 'bg-gray-100 text-gray-600'
                   : 'hover:bg-gray-50'
@@ -276,7 +277,7 @@ export default function GrantDetail() {
             <button
               onClick={() => createApplicationMutation.mutate()}
               disabled={createApplicationMutation.isPending}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 min-h-[44px] rounded-lg bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-50 text-sm w-full sm:w-auto justify-center"
             >
               {createApplicationMutation.isPending ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -294,7 +295,7 @@ export default function GrantDetail() {
         <div className="lg:col-span-2 space-y-6">
           {/* Key Details */}
           <div className="bg-white rounded-xl border p-5">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
                 <div className="text-sm text-gray-500 mb-1">Funding Amount</div>
                 <div className="font-semibold text-lg text-green-600">
@@ -382,7 +383,7 @@ export default function GrantDetail() {
                   value={notes}
                   onChange={e => setNotes(e.target.value)}
                   placeholder="Add notes about this grant..."
-                  className="w-full h-32 px-3 py-2 border rounded-lg resize-none focus:ring-2 focus:ring-primary-500"
+                  className="w-full h-32 px-3 py-2.5 min-h-[44px] text-base sm:text-sm border rounded-lg resize-none focus:ring-2 focus:ring-primary-500"
                 />
                 <div className="flex items-center gap-2">
                   <button
@@ -418,18 +419,18 @@ export default function GrantDetail() {
                   href={grant.source_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 w-full px-4 py-2 border rounded-lg hover:bg-gray-50 text-left"
+                  className="flex items-center gap-2 w-full px-4 py-2.5 min-h-[44px] border rounded-lg hover:bg-gray-50 text-left"
                 >
-                  <ExternalLink className="w-4 h-4 text-gray-500" />
+                  <ExternalLink className="w-4 h-4 text-gray-500 flex-shrink-0" />
                   <span>View on {grant.source === 'GRANTS_GOV' ? 'grants.gov' : 'Source'}</span>
                 </a>
               )}
               <button
                 onClick={() => createApplicationMutation.mutate()}
                 disabled={createApplicationMutation.isPending}
-                className="flex items-center gap-2 w-full px-4 py-2 bg-primary-50 text-primary-700 rounded-lg hover:bg-primary-100"
+                className="flex items-center gap-2 w-full px-4 py-2.5 min-h-[44px] bg-primary-50 text-primary-700 rounded-lg hover:bg-primary-100"
               >
-                <FileText className="w-4 h-4" />
+                <FileText className="w-4 h-4 flex-shrink-0" />
                 <span>Start Application</span>
               </button>
             </div>

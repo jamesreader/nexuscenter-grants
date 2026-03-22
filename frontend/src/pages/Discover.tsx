@@ -12,7 +12,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Loader2,
-  Tag,
   ArrowUpDown
 } from 'lucide-react'
 
@@ -149,14 +148,14 @@ function GrantCard({ grant, onFlag, onDismiss }: {
         <div className="flex flex-col gap-1">
           <button
             onClick={onFlag}
-            className={`p-2 rounded-lg hover:bg-gray-100 ${grant.is_flagged ? 'text-amber-500' : 'text-gray-400'}`}
+            className={`p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100 ${grant.is_flagged ? 'text-amber-500' : 'text-gray-400'}`}
             title={grant.is_flagged ? 'Remove flag' : 'Flag for review'}
           >
             {grant.is_flagged ? <Star className="w-5 h-5 fill-current" /> : <StarOff className="w-5 h-5" />}
           </button>
           <button
             onClick={onDismiss}
-            className={`p-2 rounded-lg hover:bg-gray-100 ${grant.is_dismissed ? 'text-gray-600' : 'text-gray-400'}`}
+            className={`p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100 ${grant.is_dismissed ? 'text-gray-600' : 'text-gray-400'}`}
             title={grant.is_dismissed ? 'Restore' : 'Dismiss'}
           >
             <EyeOff className="w-5 h-5" />
@@ -243,20 +242,20 @@ export default function Discover() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
             <input
               type="text"
-              placeholder="Search grants by title, agency, or description..."
+              placeholder="Search grants..."
               value={search}
               onChange={e => { setSearch(e.target.value); setDebouncedSearch(e.target.value); setPage(0) }}
-              className="w-full pl-10 pr-4 py-2.5 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+              className="w-full pl-10 pr-4 py-2.5 min-h-[44px] border rounded-lg text-base sm:text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
             />
           </div>
 
-          {/* Category Filter */}
-          <div className="flex items-center gap-2">
-            <Tag className="w-4 h-4 text-gray-500" />
+          {/* Filters row - wraps on mobile */}
+          <div className="flex flex-wrap gap-2 w-full lg:w-auto">
+            {/* Category Filter */}
             <select
               value={category}
               onChange={e => { setCategory(e.target.value); setPage(0) }}
-              className="border rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary-500"
+              className="flex-1 min-w-[140px] border rounded-lg px-3 py-2.5 min-h-[44px] text-sm focus:ring-2 focus:ring-primary-500"
             >
               <option value="">All Categories</option>
               {categories?.categories.map(cat => (
@@ -265,49 +264,49 @@ export default function Discover() {
                 </option>
               ))}
             </select>
-          </div>
 
-          {/* Source Filter */}
-          <select
-            value={source}
-            onChange={e => { setSource(e.target.value); setPage(0) }}
-            className="border rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary-500"
-          >
-            {SOURCES.map(s => (
-              <option key={s.value} value={s.value}>{s.label}</option>
-            ))}
-          </select>
-
-          {/* Relevance Filter */}
-          <select
-            value={minRelevance}
-            onChange={e => { setMinRelevance(e.target.value); setPage(0) }}
-            className="border rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary-500"
-          >
-            <option value="">Any Relevance</option>
-            <option value="0.7">70%+ (High)</option>
-            <option value="0.5">50%+ (Medium)</option>
-            <option value="0.3">30%+ (Low)</option>
-          </select>
-
-          {/* Sort */}
-          <div className="flex items-center gap-1">
+            {/* Source Filter */}
             <select
-              value={sortBy}
-              onChange={e => setSortBy(e.target.value)}
-              className="border rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary-500"
+              value={source}
+              onChange={e => { setSource(e.target.value); setPage(0) }}
+              className="flex-1 min-w-[120px] border rounded-lg px-3 py-2.5 min-h-[44px] text-sm focus:ring-2 focus:ring-primary-500"
             >
-              {SORT_OPTIONS.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              {SOURCES.map(s => (
+                <option key={s.value} value={s.value}>{s.label}</option>
               ))}
             </select>
-            <button
-              onClick={() => setSortDesc(!sortDesc)}
-              className="p-2.5 border rounded-lg hover:bg-gray-50"
-              title={sortDesc ? 'Sort ascending' : 'Sort descending'}
+
+            {/* Relevance Filter */}
+            <select
+              value={minRelevance}
+              onChange={e => { setMinRelevance(e.target.value); setPage(0) }}
+              className="flex-1 min-w-[130px] border rounded-lg px-3 py-2.5 min-h-[44px] text-sm focus:ring-2 focus:ring-primary-500"
             >
-              <ArrowUpDown className={`w-4 h-4 ${sortDesc ? '' : 'rotate-180'}`} />
-            </button>
+              <option value="">Any Relevance</option>
+              <option value="0.7">70%+ (High)</option>
+              <option value="0.5">50%+ (Medium)</option>
+              <option value="0.3">30%+ (Low)</option>
+            </select>
+
+            {/* Sort */}
+            <div className="flex items-center gap-1 flex-1 min-w-[130px]">
+              <select
+                value={sortBy}
+                onChange={e => setSortBy(e.target.value)}
+                className="flex-1 border rounded-lg px-3 py-2.5 min-h-[44px] text-sm focus:ring-2 focus:ring-primary-500"
+              >
+                {SORT_OPTIONS.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
+              <button
+                onClick={() => setSortDesc(!sortDesc)}
+                className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center border rounded-lg hover:bg-gray-50"
+                title={sortDesc ? 'Sort ascending' : 'Sort descending'}
+              >
+                <ArrowUpDown className={`w-4 h-4 ${sortDesc ? '' : 'rotate-180'}`} />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -355,15 +354,15 @@ export default function Discover() {
 
           {/* Pagination */}
           {totalPages > 1 && (
-            <div className="flex items-center justify-between mt-6 bg-white rounded-xl border px-4 py-3">
-              <span className="text-sm text-gray-600">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-6 bg-white rounded-xl border px-4 py-3">
+              <span className="text-sm text-gray-600 text-center sm:text-left">
                 Showing {page * limit + 1}-{Math.min((page + 1) * limit, data?.total || 0)} of {data?.total.toLocaleString()}
               </span>
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => setPage(p => Math.max(0, p - 1))}
                   disabled={page === 0}
-                  className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronLeft className="w-5 h-5" />
                 </button>
@@ -373,7 +372,7 @@ export default function Discover() {
                 <button
                   onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))}
                   disabled={page >= totalPages - 1}
-                  className="p-2 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ChevronRight className="w-5 h-5" />
                 </button>

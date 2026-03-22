@@ -5,8 +5,39 @@
 body {
   font-family: 'Open Sans', sans-serif;
   background-color: #FFF8F0;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Nunito', sans-serif;
+}
+
+/* Prevent horizontal overflow */
+#root {
+  overflow-x: hidden;
+  min-width: 320px;
+}
+
+/* Ensure form inputs don't zoom on iOS (16px minimum) */
+@media (max-width: 640px) {
+  input[type="text"],
+  input[type="number"],
+  input[type="email"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Smooth scrolling for filter tabs */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
 }
