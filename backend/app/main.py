@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 __version__ = "1.0.0"
 
-CORTEX_URL = os.getenv("CORTEX_URL", "http://ai-gateway.cortex.svc.cluster.local:8000")
+AI_URL = os.getenv("AI_URL", "http://daedalus:8000")
 
 
 @asynccontextmanager
@@ -146,7 +146,7 @@ async def discover_grants(request: DiscoverRequest):
     try:
         async with httpx.AsyncClient(timeout=120.0) as client:
             response = await client.post(
-                f"{CORTEX_URL}/v1/rag",
+                f"{AI_URL}/v1/rag",
                 json={
                     "message": request.query,
                     "sources": sources,

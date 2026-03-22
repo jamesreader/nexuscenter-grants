@@ -23,8 +23,11 @@ from app.models import GrantOpportunity, OrgProfile
 
 logger = logging.getLogger(__name__)
 
-# Cortex AI Gateway URL
-CORTEX_URL = "http://ai-gateway.cortex.svc.cluster.local:8000"
+# AI inference URL — defaults to Daedalus (Gemma 2 27B via llama-server)
+# Override with AI_URL env var to point elsewhere (Cortex, OpenAI, etc.)
+import os
+AI_URL = os.getenv("AI_URL", "http://daedalus:8000")
+AI_MODEL = os.getenv("AI_MODEL", "gemma-2-27b-it-Q4_K_M.gguf")
 
 
 @dataclass
@@ -159,10 +162,10 @@ class RelevanceScorer:
 
         try:
             response = await self.client.post(
-                f"{CORTEX_URL}/v1/complete",
+                f"{AI_URL}/v1/chat/completions",
                 json={
                     "messages": [{"role": "user", "content": prompt}],
-                    "model": "claude-sonnet-4-20250514",
+                    "model": AI_MODEL,
                     "max_tokens": 2000,
                     "temperature": 0.1,
                 },
@@ -171,8 +174,8 @@ class RelevanceScorer:
             response.raise_for_status()
 
             data = response.json()
-            # Cortex returns content as a string directly
-            content = data.get("content", "")
+            # OpenAI-compatible response format
+            content = data["choices"][0]["message"]["content"]
 
             # Extract JSON from response
             json_match = re.search(r'\{[\s\S]*\}', content)
