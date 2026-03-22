@@ -1,0 +1,43 @@
+services:
+  app:
+    build: .
+    ports:
+      - "28586:8000"
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=grants
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-nexusgrants2024}
+      - POSTGRES_DB=grants
+      - CORTEX_URL=${CORTEX_URL:-http://ai-gateway:8000}
+      - GRANTEXEC_USERNAME=${GRANTEXEC_USERNAME:-}
+      - GRANTEXEC_PASSWORD=${GRANTEXEC_PASSWORD:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nexus-grants.rule=Host(`grants.nexuscenter.care`)"
+      - "traefik.http.routers.nexus-grants.entrypoints=https"
+      - "traefik.http.routers.nexus-grants.tls=true"
+      - "traefik.http.routers.nexus-grants.tls.certresolver=letsencrypt"
+      - "traefik.http.services.nexus-grants.loadbalancer.server.port=8000"
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=grants
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-nexusgrants2024}
+      - POSTGRES_DB=grants
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U grants"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  pgdata:
