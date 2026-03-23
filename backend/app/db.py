@@ -22,8 +22,16 @@ logger = logging.getLogger(__name__)
 
 
 def get_database_url() -> str:
-    """Build database URL from environment variables."""
-    host = os.getenv("POSTGRES_HOST", "grants-postgres")
+    """Build database URL from environment variables.
+    
+    Prefers DATABASE_URL if set, otherwise builds from individual vars.
+    """
+    # Prefer explicit DATABASE_URL
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        return database_url
+    
+    host = os.getenv("POSTGRES_HOST", "grants-db")
     port = os.getenv("POSTGRES_PORT", "5432")
     user = os.getenv("POSTGRES_USER", "grants")
     password = os.getenv("POSTGRES_PASSWORD", "")

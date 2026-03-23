@@ -111,7 +111,7 @@ class RelevanceScorer:
 
     def __init__(self, db: AsyncSession):
         self.db = db
-        self.client = httpx.AsyncClient(timeout=120.0)
+        self.client = httpx.AsyncClient(timeout=600.0)
         self.rules: Optional[ScoringRules] = None
 
     async def close(self):
