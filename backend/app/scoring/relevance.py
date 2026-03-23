@@ -28,6 +28,7 @@ logger = logging.getLogger(__name__)
 import os
 AI_URL = os.getenv("AI_URL", "http://daedalus:8000")
 AI_MODEL = os.getenv("AI_MODEL", "gemma-2-27b-it-Q4_K_M.gguf")
+AI_API_KEY = os.getenv("AI_API_KEY", "")
 
 
 @dataclass
@@ -169,7 +170,10 @@ class RelevanceScorer:
                     "max_tokens": 2000,
                     "temperature": 0.1,
                 },
-                headers={"Content-Type": "application/json"},
+                headers={
+                    "Content-Type": "application/json",
+                    **({"Authorization": f"Bearer {AI_API_KEY}"} if AI_API_KEY else {}),
+                },
             )
             response.raise_for_status()
 
